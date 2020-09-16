@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
-import awsconfig from './aws-exports';
-import Amplify, { API, Auth } from 'aws-amplify';
-
+import Amplify from '@aws-amplify/core';
+import { API } from 'aws-amplify';
 import './App.css';
 import { listNotes } from './graphql/queries';
 import { createNote as createNoteMutation, deleteNote as deleteNoteMutation } from './graphql/mutations';
 
-Amplify.configure(awsconfig);
+
+
+// import awsconfig from './aws-exports';
+// Amplify.configure(awsconfig);
+Amplify.configure({
+  "aws_project_region": process.env.REACT_APP_AWS_PROJECT_REGION,
+  "aws_cognito_identity_pool_id": process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID,
+  "aws_cognito_region": process.env.REACT_APP_AWS_COGNITO_REGION,
+  "aws_user_pools_id": process.env.REACT_APP_AWS_USER_POOLS_ID,
+  "aws_user_pools_web_client_id": process.env.REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID,
+  "oauth": {},
+  "aws_appsync_graphqlEndpoint": process.env.REACT_APP_AWS_APPSYNC_GRAPHQLENDPOINT,
+  "aws_appsync_region": process.env.REACT_APP_AWS_APPSYNC_REGION,
+  "aws_appsync_authenticationType": "API_KEY",
+  "aws_appsync_apiKey": process.env.REACT_APP_AWS_APPSYNC_APIKEY
+});
 
 const initialFormState = { name: '', description: '' }
 
